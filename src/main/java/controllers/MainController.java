@@ -9,7 +9,8 @@ public class MainController {
     public static Session getSession()
     {
         if(session == null)
-            session = new Configuration().configure("./hibernate.cfg.xml").addResource("./map.xml").buildSessionFactory().openSession();
+            session = new Configuration().configure("./hibernate.cfg.xml").buildSessionFactory().openSession();
+            //session = new Configuration().configure("./hibernate.cfg.xml").addResource("./map.xml").buildSessionFactory().openSession();
         return session;
     }
 

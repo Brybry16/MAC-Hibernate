@@ -1,15 +1,22 @@
 package models;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
 public class Cours {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column
     private String titre;
+
+    @Column
     private int credits;
+
+    @OneToMany(targetEntity = Inscription.class, mappedBy = "cours")
     private Set<Inscription> inscriptions = new HashSet<>();
 
     public Cours() {}
@@ -19,7 +26,6 @@ public class Cours {
         this.credits = credits;
     }
 
-    @Id
     public int getId() {
         return id;
     }
@@ -44,11 +50,11 @@ public class Cours {
         this.credits = credits;
     }
 
-    public void addInscription(Inscription inscription) {
+    void addInscription(Inscription inscription) {
         this.inscriptions.add(inscription);
     }
 
-    public Set<Etudiant> getEtudiants() {
+    private Set<Etudiant> getEtudiants() {
         return this.inscriptions
                 .stream()
                 .map(Inscription::getEtudiant)
@@ -60,7 +66,7 @@ public class Cours {
         String s = "Cours: " + titre + "\nEtudiants:";
 
         for(Etudiant e : getEtudiants()) {
-            s.concat("\n- " + e.getPrenom() + " " + e.getNom());
+            s += "\n- " + e.getPrenom() + " " + e.getNom();
         }
 
         return s;

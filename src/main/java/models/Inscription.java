@@ -1,7 +1,6 @@
 package models;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Fichier: <nom>
@@ -11,9 +10,19 @@ import javax.persistence.Id;
  */
 @Entity
 public class Inscription {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column
     private char grade;
-    private Cours cours;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cours_id", nullable = true)
+    protected Cours cours;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "etudiant_id", nullable = true)
     private Etudiant etudiant;
 
     public Inscription(Etudiant etudiant, Cours cours) {
@@ -21,8 +30,6 @@ public class Inscription {
         this.cours = cours;
     }
 
-
-    @Id
     public int getId() {
         return id;
     }

@@ -1,9 +1,6 @@
 package models;
 
-import controllers.InscriptionController;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,10 +8,26 @@ import java.util.stream.Collectors;
 
 @Entity
 public class Etudiant {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Version
+    private int version;
+
+    @Column
     private String prenom;
+
+    @Column
     private String nom;
+
+
+    @Column
+    @Temporal(TemporalType.TIMESTAMP)
     private Date date_inscription;
+
+    @OneToMany(targetEntity = Inscription.class, mappedBy = "etudiant")
     private Set<Inscription> inscriptions = new HashSet<>();
 
     public Etudiant() {}
@@ -25,7 +38,6 @@ public class Etudiant {
         this.date_inscription = date_inscription;
     }
 
-    @Id
     public int getId() {
         return id;
     }
@@ -78,7 +90,7 @@ public class Etudiant {
         String s = "Etudiant: " + prenom + " " + nom + "\nDate d'inscription: " + date_inscription + "\nCours:";
 
         for(Cours c : getCours()) {
-            s.concat("\n- " + c.getTitre());
+            s += "\n- " + c.getTitre();
         }
 
         return s;
