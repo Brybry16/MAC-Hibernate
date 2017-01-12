@@ -1,17 +1,13 @@
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.Query;
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Restrictions;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Property;
-import javax.persistence.*;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
+package models;
+
+import controllers.InscriptionController;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 public class Etudiant {
@@ -19,6 +15,7 @@ public class Etudiant {
     private String prenom;
     private String nom;
     private Date date_inscription;
+    private Set<Inscription> inscriptions = new HashSet<>();
 
     public Etudiant() {}
 
@@ -59,5 +56,31 @@ public class Etudiant {
 
     public void setDate_inscription(Date date_inscription) {
         this.date_inscription = date_inscription;
+    }
+
+    public void ajouterCours(Cours... cours) {
+        for(Cours c : cours) {
+            Inscription i = new Inscription(this, c);
+            inscriptions.add(i);
+            c.addInscription(i);
+        }
+    }
+
+    public Set<Cours> getCours() {
+        return this.inscriptions
+                .stream()
+                .map(Inscription::getCours)
+                .collect(Collectors.toSet());
+    }
+
+    @Override
+    public String toString() {
+        String s = "Etudiant: " + prenom + " " + nom + "\nDate d'inscription: " + date_inscription + "\nCours:";
+
+        for(Cours c : getCours()) {
+            s.concat("\n- " + c.getTitre());
+        }
+
+        return s;
     }
 }

@@ -4,7 +4,7 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="Cours" table="cours">
+    <class name="models.Cours" table="cours">
         <meta attribute="class-description">
             Cette classe contient les détails des cours.
         </meta>
@@ -15,7 +15,7 @@
         <property name="credits" column="credits" type="int"/>
     </class>
 
-    <class name="Etudiant" table="etudiant">
+    <class name="models.Etudiant" table="etudiant">
         <meta attribute="class-description">
             Cette classe contient les détails des étudiants.
         </meta>
@@ -25,5 +25,15 @@
         <property name="prenom" column="prenom" type="string"/>
         <property name="nom" column="nom" type="string"/>
         <property name="date_inscription" column="date_inscription" type="date"/>
+    </class>
+
+    <class name="models.Inscription" table="inscription">
+        <meta attribute="class-description">
+            Cette classe contient les détails des inscriptions.
+        </meta>
+        <id name="id" type="int" column="id">
+            <generator class="native"/>
+        </id>
+        <property name="grade" column="grade" type="char"/>
     </class>
 </hibernate-mapping>

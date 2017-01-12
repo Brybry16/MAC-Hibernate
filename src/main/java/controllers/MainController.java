@@ -1,3 +1,5 @@
+package controllers;
+
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
 
