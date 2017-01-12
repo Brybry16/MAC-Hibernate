@@ -1,10 +1,17 @@
 package models;
 
+import controllers.InscriptionController;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+;
 
 @Entity
 public class Etudiant {
@@ -12,9 +19,6 @@ public class Etudiant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    @Version
-    private int version;
 
     @Column
     private String prenom;
@@ -28,6 +32,7 @@ public class Etudiant {
     private Date date_inscription;
 
     @OneToMany(targetEntity = Inscription.class, mappedBy = "etudiant")
+    @Cascade(CascadeType.ALL)
     private Set<Inscription> inscriptions = new HashSet<>();
 
     public Etudiant() {}
@@ -78,11 +83,27 @@ public class Etudiant {
         }
     }
 
-    public Set<Cours> getCours() {
+    private Set<Cours> getCours() {
         return this.inscriptions
                 .stream()
                 .map(Inscription::getCours)
                 .collect(Collectors.toSet());
+    }
+
+    public void attribuerGrade(Cours cours, char grade) throws Exception {
+        for(Inscription i : inscriptions) {
+            if(i.getCours() == cours) {
+                i.setGrade(grade);
+                InscriptionController.update(i);
+                return;
+            }
+        }
+
+        throw new Exception("L'étudiant n'est pas inscrit au cours");
+    }
+
+    public List<Cours> coursNonCredites() throws Exception {
+        return InscriptionController.getNonCredites(this);
     }
 
     @Override

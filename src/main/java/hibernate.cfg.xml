@@ -20,7 +20,7 @@
             org.hibernate.dialect.MySQLDialect
         </property>
         <!-- Pour afficher les requêtes SQL en console (debugging) -->
-        <property name="show_sql">true</property>
+        <property name="show_sql">false</property>
         <!-- Pour supprimer et recréer le schéma de BD au lancement -->
         <property name="hbm2ddl.auto">create</property>
 

@@ -1,7 +1,13 @@
 package models;
 
+import controllers.InscriptionController;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import javax.persistence.*;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
@@ -17,6 +23,7 @@ public class Cours {
     private int credits;
 
     @OneToMany(targetEntity = Inscription.class, mappedBy = "cours")
+    @Cascade(CascadeType.ALL)
     private Set<Inscription> inscriptions = new HashSet<>();
 
     public Cours() {}
@@ -59,6 +66,10 @@ public class Cours {
                 .stream()
                 .map(Inscription::getEtudiant)
                 .collect(Collectors.toSet());
+    }
+
+    public List<Etudiant> etudiantsEnAttente() throws Exception {
+        return InscriptionController.getEnAttente(this);
     }
 
     @Override

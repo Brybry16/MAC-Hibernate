@@ -1,6 +1,11 @@
 package models;
 
+import controllers.InscriptionController;
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.CascadeType;
+
 import javax.persistence.*;
+import javax.persistence.Entity;
 
 /**
  * Fichier: <nom>
@@ -28,6 +33,12 @@ public class Inscription {
     public Inscription(Etudiant etudiant, Cours cours) {
         this.etudiant = etudiant;
         this.cours = cours;
+
+        try {
+            InscriptionController.create(this);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public int getId() {
