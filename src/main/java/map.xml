@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="Cours" table="cours">
+        <meta attribute="class-description">
+            Cette classe contient les détails des cours.
+        </meta>
+        <id name="id" type="int" column="id">
+            <generator class="native"/>
+        </id>
+        <property name="titre" column="titre" type="string"/>
+        <property name="credits" column="credits" type="int"/>
+    </class>
+
+    <class name="Etudiant" table="etudiant">
+        <meta attribute="class-description">
+            Cette classe contient les détails des étudiants.
+        </meta>
+        <id name="id" type="int" column="id">
+            <generator class="native"/>
+        </id>
+        <property name="prenom" column="prenom" type="string"/>
+        <property name="nom" column="nom" type="string"/>
+        <property name="date_inscription" column="date_inscription" type="date"/>
+    </class>
+</hibernate-mapping>
