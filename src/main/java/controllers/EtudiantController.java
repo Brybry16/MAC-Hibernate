@@ -23,6 +23,22 @@ public class EtudiantController extends Controller {
         }
     }
 
+    public static void delete(Etudiant... etudiants) throws Exception
+    {
+        Session session = MainController.getSession();
+        try {
+            session.beginTransaction();
+            for(Etudiant e : etudiants) {
+                e.getInscriptions().forEach(session::delete);
+                session.delete(e);
+            }
+
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            rollback(session.getTransaction(), e);
+        }
+    }
+
     @SuppressWarnings("unchecked")
     public static List<Etudiant> getAll() throws Exception
     {

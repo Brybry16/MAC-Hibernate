@@ -30,7 +30,7 @@ public class InscriptionController extends Controller {
 
         try {
             session.beginTransaction();
-            session.saveOrUpdate(inscription);
+            session.update(session.merge(inscription));
             session.getTransaction().commit();
         } catch (Exception e) {
             rollback(session.getTransaction(), e);

@@ -31,6 +31,10 @@ public class Etudiant {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date_inscription;
 
+    public Set<Inscription> getInscriptions() {
+        return inscriptions;
+    }
+
     @OneToMany(targetEntity = Inscription.class, mappedBy = "etudiant")
     @Cascade(CascadeType.ALL)
     private Set<Inscription> inscriptions = new HashSet<>();

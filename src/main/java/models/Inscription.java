@@ -1,7 +1,6 @@
 package models;
 
 import controllers.InscriptionController;
-import org.hibernate.annotations.*;
 import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
@@ -15,6 +14,7 @@ import javax.persistence.Entity;
  */
 @Entity
 public class Inscription {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -30,7 +30,7 @@ public class Inscription {
     @JoinColumn(name = "etudiant_id", nullable = true)
     private Etudiant etudiant;
 
-    public Inscription(Etudiant etudiant, Cours cours) {
+    Inscription(Etudiant etudiant, Cours cours) {
         this.etudiant = etudiant;
         this.cours = cours;
 
@@ -39,6 +39,9 @@ public class Inscription {
         } catch(Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public Inscription() {
     }
 
     public int getId() {
@@ -53,11 +56,11 @@ public class Inscription {
         return grade;
     }
 
-    public void setGrade(char grade) {
+    void setGrade(char grade) {
         this.grade = grade;
     }
 
-    public Cours getCours() {
+    Cours getCours() {
         return cours;
     }
 
@@ -65,7 +68,7 @@ public class Inscription {
         this.cours = cours;
     }
 
-    public Etudiant getEtudiant() {
+    Etudiant getEtudiant() {
         return etudiant;
     }
 
