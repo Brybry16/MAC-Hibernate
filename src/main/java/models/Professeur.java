@@ -31,7 +31,7 @@ public class Professeur implements Enseignant {
     }
 
     public String toString() {
-        String s = prenom + " " + nom + " (" + sigle + ")";
+        return prenom + " " + nom + " (" + sigle + ")";
     }
 
     public int getId() {
