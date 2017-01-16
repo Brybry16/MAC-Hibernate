@@ -1,16 +1,20 @@
 package models;
 
 import controllers.InscriptionController;
-import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.*;
 import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
+@Table(name = "cours")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Cours {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,11 +30,21 @@ public class Cours {
     @Cascade(CascadeType.ALL)
     private Set<Inscription> inscriptions = new HashSet<>();
 
+    @Any(metaColumn = @Column(name = "enseignant_type"))
+    @AnyMetaDef(idType = "int", metaType = "string",
+        metaValues = {
+            @MetaValue(targetEntity = Professeur.class, value = "PROFESSEUR"),
+            @MetaValue(targetEntity = ChargeDeCours.class, value = "CHARGE_DE_COURS")
+        })
+    @JoinColumn(name = "enseignant_id")
+    private Enseignant enseignant;
+
     public Cours() {}
 
-    public Cours(String titre, int credits) {
+    public Cours(String titre, int credits, Enseignant enseignant) {
         this.titre = titre;
         this.credits = credits;
+        this.enseignant = enseignant;
     }
 
     public int getId() {
@@ -74,12 +88,22 @@ public class Cours {
 
     @Override
     public String toString() {
-        String s = "Cours: " + titre + "\nEtudiants:";
+        String s = "Cours: " + titre +
+                "\nEnseignant: " + enseignant +
+                "\nEtudiants:";
 
         for(Etudiant e : getEtudiants()) {
             s += "\n- " + e.getPrenom() + " " + e.getNom();
         }
 
         return s;
+    }
+
+    public Enseignant getEnseignant() {
+        return enseignant;
+    }
+
+    public void setEnseignant(Enseignant enseignant) {
+        this.enseignant = enseignant;
     }
 }
