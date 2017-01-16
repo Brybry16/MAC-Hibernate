@@ -1,9 +1,6 @@
 package models;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Fichier: <nom>
@@ -11,25 +8,20 @@ import javax.persistence.Id;
  * Date de création: 16.01.2017
  * But: <but>
  */
+@Entity
+@Table(name = "chargedecours")
 public class ChargeDeCours implements Enseignant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column
     private String nomComplet;
+
+    public ChargeDeCours() {}
 
     public ChargeDeCours(String nomComplet) {
         this.nomComplet = nomComplet;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getNomComplet() {

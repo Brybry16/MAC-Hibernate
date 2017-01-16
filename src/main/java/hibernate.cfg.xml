@@ -24,8 +24,12 @@
         <!-- Pour supprimer et recréer le schéma de BD au lancement -->
         <property name="hbm2ddl.auto">create</property>
 
-        <mapping class="models.Etudiant" />
+        <mapping class="models.ChargeDeCours" />
         <mapping class="models.Cours" />
+        <mapping class="models.CoursExterieur" />
+        <mapping class="models.Enseignant" />
+        <mapping class="models.Etudiant" />
         <mapping class="models.Inscription" />
+        <mapping class="models.Professeur" />
     </session-factory>
 </hibernate-configuration>

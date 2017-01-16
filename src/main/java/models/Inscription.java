@@ -1,10 +1,8 @@
 package models;
 
 import controllers.InscriptionController;
-import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
 
 /**
  * Fichier: <nom>
@@ -13,6 +11,7 @@ import javax.persistence.Entity;
  * But: <but>
  */
 @Entity
+@Table(name = "inscription")
 public class Inscription {
 
     @Id

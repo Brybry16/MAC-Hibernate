@@ -1,18 +1,27 @@
 import controllers.CoursController;
+import controllers.EnseignantController;
 import controllers.EtudiantController;
 import controllers.MainController;
-import models.Cours;
-import models.Etudiant;
+import models.*;
 
 import java.util.Date;
 
 public class Main {
     public static void main(String[] args) throws Exception {
 
+        //Peuplage de profs, chargés de cours
+        Enseignant ELS = new Professeur("Eric", "Lefrançois", "ELS");
+        Enseignant JBB = new ChargeDeCours("Jonathan Paul Bischof");
+        Enseignant DGN = new Professeur("Didier", "Gern", "DGN");
+
+        //Ajout des enseignants dans la DB
+        System.out.println("Création des enseignants...");
+        EnseignantController.create(ELS, JBB, DGN);
+
         //Création des objets cours
-        Cours MAC = new Cours("MAC", 45);
-        Cours PDG = new Cours("PDG", 2);
-        Cours GET = new Cours("GET", 3);
+        Cours MAC = new Cours("MAC", 45, ELS);
+        Cours PDG = new Cours("PDG", 2, JBB);
+        Cours GET = new CoursExterieur("GET", 3, DGN, "St-Roch");
 
         //Ajout des cours dans la DB
         System.out.println("Création des cours...");

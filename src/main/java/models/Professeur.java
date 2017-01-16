@@ -9,20 +9,20 @@ import javax.persistence.*;
  * But: <but>
  */
 @Entity
+@Table(name = "professeur")
 public class Professeur implements Enseignant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column
     private String prenom;
 
-    @Column
     private String nom;
 
-    @Column
     private String sigle;
+
+    public Professeur() {}
 
     public Professeur(String prenom, String nom, String sigle) {
         this.prenom = prenom;
@@ -32,14 +32,6 @@ public class Professeur implements Enseignant {
 
     public String toString() {
         return prenom + " " + nom + " (" + sigle + ")";
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getPrenom() {

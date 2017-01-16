@@ -1,6 +1,5 @@
 package models;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 
 /**
@@ -12,8 +11,9 @@ import javax.persistence.Entity;
 @Entity
 public class CoursExterieur extends Cours {
 
-    @Column
     private String ecole;
+
+    public CoursExterieur() {}
 
     public CoursExterieur(String titre, int credits, Enseignant enseignant, String ecole) {
         super(titre, credits, enseignant);

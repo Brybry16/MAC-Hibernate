@@ -1,6 +1,7 @@
 package models;
 
-import javax.persistence.Entity;
+import javax.persistence.MappedSuperclass;
+import java.io.Serializable;
 
 /**
  * Fichier: <nom>
@@ -8,6 +9,6 @@ import javax.persistence.Entity;
  * Date de création: 16.01.2017
  * But: <but>
  */
-@Entity
-interface Enseignant {
-}
+
+@MappedSuperclass
+public interface Enseignant extends Serializable {}

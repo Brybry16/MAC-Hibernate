@@ -30,13 +30,13 @@ public class Cours {
     @Cascade(CascadeType.ALL)
     private Set<Inscription> inscriptions = new HashSet<>();
 
-    @Any(metaColumn = @Column(name = "enseignant_type"))
+    @Any(metaColumn = @Column(name = "enseignant_type"), fetch = FetchType.EAGER)
     @AnyMetaDef(idType = "int", metaType = "string",
         metaValues = {
             @MetaValue(targetEntity = Professeur.class, value = "PROFESSEUR"),
             @MetaValue(targetEntity = ChargeDeCours.class, value = "CHARGE_DE_COURS")
         })
-    @JoinColumn(name = "enseignant_id")
+    @JoinColumn(name = "enseignant_id", nullable = true)
     private Enseignant enseignant;
 
     public Cours() {}
