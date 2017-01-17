@@ -1,7 +1,11 @@
 package controllers;
 
+import models.Enseignant;
 import models.Etudiant;
+import models.Inscription;
 import org.hibernate.Session;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
@@ -56,5 +60,16 @@ public class EtudiantController extends Controller {
         }
 
         return etudiants;
+    }
+
+    public static List<Enseignant> getEnseignants(Etudiant etudiant) throws Exception {
+        Session session = MainController.getSession();
+
+        return session.createCriteria(Inscription.class)
+                .createAlias("etudiant", "e")
+                .createAlias("cours", "c")
+                .add(Restrictions.eq("e.id", etudiant.getId()))
+                .setProjection(Projections.distinct(Projections.property("c.enseignant")))
+                .list();
     }
 }

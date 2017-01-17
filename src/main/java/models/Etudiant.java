@@ -1,5 +1,6 @@
 package models;
 
+import controllers.EtudiantController;
 import controllers.InscriptionController;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -109,6 +110,10 @@ public class Etudiant {
 
     public List<Cours> coursNonCredites() throws Exception {
         return InscriptionController.getNonCredites(this);
+    }
+
+    public List getEnseignants() throws Exception {
+        return EtudiantController.getEnseignants(this);
     }
 
     @Override

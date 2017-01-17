@@ -43,22 +43,10 @@ public class InscriptionController extends Controller {
     public static List<Cours> getNonCredites(Etudiant etudiant) throws Exception
     {
         Session session = MainController.getSession();
-        List<Cours> cours = null;
-
-        try {
-            session.beginTransaction();
-
-            cours = session.createCriteria(Cours.class)
-                    .createAlias("inscriptions", "i")
-                    .add(Restrictions.and(Restrictions.eq("i.etudiant", etudiant), Restrictions.eq("i.grade", '\u0000')))
-                    .list();
-
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            rollback(session.getTransaction(), e);
-        }
-
-        return cours;
+        return session.createCriteria(Cours.class)
+                .createAlias("inscriptions", "i")
+                .add(Restrictions.and(Restrictions.eq("i.etudiant", etudiant), Restrictions.eq("i.grade", '\u0000')))
+                .list();
     }
 
     @SuppressWarnings("unchecked")

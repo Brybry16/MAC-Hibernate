@@ -36,7 +36,7 @@ public class Cours {
             @MetaValue(targetEntity = Professeur.class, value = "PROFESSEUR"),
             @MetaValue(targetEntity = ChargeDeCours.class, value = "CHARGE_DE_COURS")
         })
-    @JoinColumn(name = "enseignant_id", nullable = true)
+    @JoinColumn(name = "enseignant_id")
     private Enseignant enseignant;
 
     public Cours() {}
