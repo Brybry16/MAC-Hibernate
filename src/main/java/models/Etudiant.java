@@ -17,6 +17,9 @@ public class Etudiant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Version
+    private int version;
+
     @Column
     private String prenom;
 
@@ -50,6 +53,14 @@ public class Etudiant {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 
     public String getPrenom() {
