@@ -6,11 +6,7 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
+import java.util.*;
 
 
 @Entity
@@ -30,7 +26,7 @@ public class Etudiant {
 
     @Column
     @Temporal(TemporalType.TIMESTAMP)
-    private Date date_inscription;
+    private Calendar dateInscription;
 
     public Set<Inscription> getInscriptions() {
         return inscriptions;
@@ -42,10 +38,10 @@ public class Etudiant {
 
     public Etudiant() {}
 
-    public Etudiant(String prenom, String nom, Date date_inscription) {
+    public Etudiant(String prenom, String nom, Calendar dateInscription) {
         this.prenom = prenom;
         this.nom = nom;
-        this.date_inscription = date_inscription;
+        this.dateInscription = dateInscription;
     }
 
     public int getId() {
@@ -72,12 +68,12 @@ public class Etudiant {
         this.nom = nom;
     }
 
-    public Date getDate_inscription() {
-        return date_inscription;
+    public Calendar getDateInscription() {
+        return dateInscription;
     }
 
-    public void setDate_inscription(Date date_inscription) {
-        this.date_inscription = date_inscription;
+    public void setDateInscription(Calendar date_inscription) {
+        this.dateInscription = date_inscription;
     }
 
     public void ajouterCours(Cours... cours) {
@@ -119,7 +115,7 @@ public class Etudiant {
 
     @Override
     public String toString() {
-        String s = "Etudiant: " + prenom + " " + nom + "\nDate d'inscription: " + date_inscription + "\nCours:";
+        String s = "Etudiant: " + prenom + " " + nom + "\nDate d'inscription: " + dateInscription + "\nCours:";
 
         try {
             for(Cours c : getCours()) {

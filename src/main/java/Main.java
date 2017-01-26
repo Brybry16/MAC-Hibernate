@@ -1,10 +1,7 @@
-import controllers.CoursController;
-import controllers.EnseignantController;
-import controllers.EtudiantController;
-import controllers.MainController;
+import controllers.*;
 import models.*;
 
-import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class Main {
 
@@ -28,10 +25,10 @@ public class Main {
         CoursController.create(MAC, SER, GET, RES);
 
         //Création des objets étudiant
-        Etudiant Bryan = new Etudiant("Bryan", "Perroud", new Date(System.currentTimeMillis()));
-        Etudiant Toni = new Etudiant("Toni", "Dias", new Date(System.currentTimeMillis()));
-        Etudiant Paul = new Etudiant("Paul", "Nta", new Date(System.currentTimeMillis()));
-        Etudiant Fred = new Etudiant("Fred", "Fyfer", new Date(System.currentTimeMillis()));
+        Etudiant Bryan = new Etudiant("Bryan", "Perroud", new GregorianCalendar());
+        Etudiant Toni = new Etudiant("Toni", "Dias", new GregorianCalendar());
+        Etudiant Paul = new Etudiant("Paul", "Nta", new GregorianCalendar());
+        Etudiant Fred = new Etudiant("Fred", "Fyfer", new GregorianCalendar());
 
         //Ajout des étudiants dans la DB
         System.out.println("\n==================\n");
@@ -62,6 +59,21 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
+        ORMAccess ormAccess = new ORMAccess();
+        try {
+            ormAccess.peuplerLaBase();
+            StudentsController ctrEtudiants1 = new StudentsController(ormAccess);
+            StudentsController ctrEtudiants2 = new StudentsController(ormAccess);
+            while (true)
+                try {Thread.sleep(500);}catch(InterruptedException e) {}
+        }
+        catch (Exception e){
+            System.out.println(e.toString());
+        }
+        finally {
+            ORMAccess.terminate();
+        }
+        /*
         Etudiant Fred = populateDB();
 
         //Inscription à des cours, puis suppression
@@ -107,6 +119,8 @@ public class Main {
             System.out.println("\nEnseignants de " + e.getPrenom() + " " + e.getNom() + ":");
             e.getEnseignants().forEach(ens -> System.out.println("- " + ens));
         }
+
+        //*/
 
         MainController.shutdown();
     }
