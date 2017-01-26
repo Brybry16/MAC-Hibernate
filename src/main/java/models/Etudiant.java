@@ -10,7 +10,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 
 
@@ -89,11 +88,12 @@ public class Etudiant {
         }
     }
 
-    private Set<Cours> getCours() {
-        return this.inscriptions
+    private List<Cours> getCours() throws Exception {
+        return InscriptionController.getCours(this);
+        /*return this.inscriptions
                 .stream()
                 .map(Inscription::getCours)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toSet());*/
     }
 
     public void attribuerGrade(Cours cours, char grade) throws Exception {
@@ -112,7 +112,8 @@ public class Etudiant {
         return InscriptionController.getNonCredites(this);
     }
 
-    public List getEnseignants() throws Exception {
+    @SuppressWarnings("All")
+    public List<Enseignant> getEnseignants() throws Exception {
         return EtudiantController.getEnseignants(this);
     }
 
@@ -120,8 +121,12 @@ public class Etudiant {
     public String toString() {
         String s = "Etudiant: " + prenom + " " + nom + "\nDate d'inscription: " + date_inscription + "\nCours:";
 
-        for(Cours c : getCours()) {
-            s += "\n- " + c.getTitre();
+        try {
+            for(Cours c : getCours()) {
+                s += "\n- " + c.getTitre();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return s;

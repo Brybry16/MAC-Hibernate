@@ -75,11 +75,8 @@ public class Cours {
         this.inscriptions.add(inscription);
     }
 
-    private Set<Etudiant> getEtudiants() {
-        return this.inscriptions
-                .stream()
-                .map(Inscription::getEtudiant)
-                .collect(Collectors.toSet());
+    private List<Etudiant> getEtudiants() throws Exception {
+        return InscriptionController.getEtudiants(this);
     }
 
     public List<Etudiant> etudiantsEnAttente() throws Exception {
@@ -92,8 +89,12 @@ public class Cours {
                 "\nEnseignant: " + enseignant +
                 "\nEtudiants:";
 
-        for(Etudiant e : getEtudiants()) {
-            s += "\n- " + e.getPrenom() + " " + e.getNom();
+        try {
+            for(Etudiant e : getEtudiants()) {
+                s += "\n- " + e.getPrenom() + " " + e.getNom();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return s;

@@ -62,6 +62,7 @@ public class EtudiantController extends Controller {
         return etudiants;
     }
 
+    @SuppressWarnings("All")
     public static List<Enseignant> getEnseignants(Etudiant etudiant) throws Exception {
         Session session = MainController.getSession();
 

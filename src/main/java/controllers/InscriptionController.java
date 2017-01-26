@@ -70,4 +70,44 @@ public class InscriptionController extends Controller {
 
         return etudiants;
     }
+
+    @SuppressWarnings("All")
+    public static List<Etudiant> getEtudiants(Cours cours) throws Exception {
+        Session session = MainController.getSession();
+        List<Etudiant> etudiants = null;
+
+        try {
+            session.beginTransaction();
+
+            etudiants = session.createQuery("select i.etudiant from Inscription i left join i.cours as c where c.id = :id")
+                    .setParameter("id", cours.getId())
+                    .list();
+
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            rollback(session.getTransaction(), e);
+        }
+
+        return etudiants;
+    }
+
+    @SuppressWarnings("All")
+    public static List<Cours> getCours(Etudiant etudiant) throws Exception {
+        Session session = MainController.getSession();
+        List<Cours> cours = null;
+
+        try {
+            session.beginTransaction();
+
+            cours = session.createQuery("select i.cours from Inscription i left join i.etudiant as e where e.id = :id")
+                    .setParameter("id", etudiant.getId())
+                    .list();
+
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            rollback(session.getTransaction(), e);
+        }
+
+        return cours;
+    }
 }
